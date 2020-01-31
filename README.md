@@ -1,2 +1,4 @@
-# csce317
-Class project files for CSCE 317 Computer Systems Engineering
+# CSCE 317
+
+This is the shared repository for my project group in CSCE 317, Computer
+Systems Engineering.
