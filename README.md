@@ -2,3 +2,5 @@
 
 This is the shared repository for my project group in CSCE 317, Computer
 Systems Engineering.
+
+Current project is UART.
