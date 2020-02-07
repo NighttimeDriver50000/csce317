@@ -10,3 +10,4 @@ handout/*.log
 handout/*.out
 handout/*.toc
 *.tgz
+.*.swp
