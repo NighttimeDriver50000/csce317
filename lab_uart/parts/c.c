@@ -80,7 +80,8 @@ uint8_t matchesCommand(char* compare) {
             return 0;
         }
     }
-    return 1;
+    return (commandLength == MAX_COMMAND_LENGTH
+            || compare[commandLength] == '\0');
 }
 
 void resetPrompt() {
@@ -101,7 +102,9 @@ int main(void) {
     while (1) {
         c = uart_getchar(stdin);
         if (c == '\r' || c == '\n') {
-            if (matchesCommand("on")) {
+            if (commandLength == 0) {
+                // pass
+            } else if (matchesCommand("on")) {
                 overflows = 0;
                 TCNT0 = 0;
                 setBitByIndex(&PORTC, PORTC0, 1);
@@ -113,14 +116,16 @@ int main(void) {
                 printf("\nUnknown command. Valid commands: on, off");
             }
             resetPrompt();
-            continue;
-        }
-        if (commandLength == MAX_COMMAND_LENGTH) {
+        } else if (c == '\b' || c == '\x7f') {
+            if (commandLength != 0) {
+                --commandLength;
+            }
+        } else if (commandLength == MAX_COMMAND_LENGTH) {
             printf("\nMaximum command length %d exceeded", MAX_COMMAND_LENGTH);
             resetPrompt();
-            continue;
+        } else {
+            command[commandLength] = c;
+            ++commandLength;
         }
-        command[commandLength] = c;
-        ++commandLength;
     }
 }
