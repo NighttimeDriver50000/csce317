@@ -1,0 +1,410 @@
+\nonstopmode
+\expandafter\ifx\csname pdfobjcompresslevel\endcsname\relax\else\pdfobjcompresslevel0\fi
+\ifnum\the\pdftexversion<140\errmessage{Pdftex is too old. Set IPEANCIENTPDFTEX environment variable!}\fi
+\documentclass{article}
+\newdimen\ipefs
+\newcounter{ipePage}\newcounter{ipeView}
+\newcounter{ipePages}\newcounter{ipeViews}
+\newcommand{\PageTitle}[1]{#1}
+\newcommand{\ipesymbol}[4]{$\bullet$}
+\def\ipedefinecolors#1{\ipecolorpreamble{#1}\let\ipecolorpreamble\relax}
+\def\ipecolorpreamble#1{\usepackage[#1]{xcolor}
+\definecolor{red}{rgb}{1,0,0}
+\definecolor{green}{rgb}{0,1,0}
+\definecolor{blue}{rgb}{0,0,1}
+\definecolor{yellow}{rgb}{1,1,0}
+\definecolor{orange}{rgb}{1,0.647,0}
+\definecolor{gold}{rgb}{1,0.843,0}
+\definecolor{purple}{rgb}{0.627,0.125,0.941}
+\definecolor{gray}{gray}{0.745}
+\definecolor{brown}{rgb}{0.647,0.165,0.165}
+\definecolor{navy}{rgb}{0,0,0.502}
+\definecolor{pink}{rgb}{1,0.753,0.796}
+\definecolor{seagreen}{rgb}{0.18,0.545,0.341}
+\definecolor{turquoise}{rgb}{0.251,0.878,0.816}
+\definecolor{violet}{rgb}{0.933,0.51,0.933}
+\definecolor{darkblue}{rgb}{0,0,0.545}
+\definecolor{darkcyan}{rgb}{0,0.545,0.545}
+\definecolor{darkgray}{gray}{0.663}
+\definecolor{darkgreen}{rgb}{0,0.392,0}
+\definecolor{darkmagenta}{rgb}{0.545,0,0.545}
+\definecolor{darkorange}{rgb}{1,0.549,0}
+\definecolor{darkred}{rgb}{0.545,0,0}
+\definecolor{lightblue}{rgb}{0.678,0.847,0.902}
+\definecolor{lightcyan}{rgb}{0.878,1,1}
+\definecolor{lightgray}{gray}{0.827}
+\definecolor{lightgreen}{rgb}{0.565,0.933,0.565}
+\definecolor{lightyellow}{rgb}{1,1,0.878}
+\definecolor{black}{gray}{0}
+\definecolor{white}{gray}{1}
+}
+\makeatletter
+\def\ipesetcolor#1#2#3{\def\current@color{#1 #2 #3 rg #1 #2 #3 RG}\pdfcolorstack\@pdfcolorstack push{\current@color}}
+\def\iperesetcolor{\pdfcolorstack\@pdfcolorstack pop}
+\makeatother
+
+
+
+\usepackage{graphicx}
+\ipedefinecolors{}
+\pagestyle{empty}
+\newcount\bigpoint\dimen0=0.01bp\bigpoint=\dimen0
+\begin{document}
+\begin{picture}(500,500)
+\setbox0=\hbox{\normalsize
+\ipesetcolor{0}{0}{0}%
+USB%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 1 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\normalsize
+\ipesetcolor{0}{0}{0}%
+ICSP
+%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 2 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\normalsize
+\ipesetcolor{0}{0}{0}%
+reset%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 3 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+SCL%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 4 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+SDA%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 5 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+GND%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 6 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+13%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 7 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+12%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 8 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+11 $\sim$%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 9 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+10 $\sim$%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 10 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+9 $\sim$%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 11 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+8%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 12 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+AREF%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 13 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+6 $\sim$%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 14 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+5 $\sim$%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 15 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+4%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 16 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+3 $\sim$%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 17 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+2%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 18 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+TX $\rightarrow$ 1%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 19 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+RX $\leftarrow$ 0%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 20 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+7%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 21 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+N/C%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 22 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+IOREF%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 23 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+RESET%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 24 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+3.3V%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 25 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+5V%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 26 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+GND%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 27 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+GND%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 28 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+A1%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 29 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+A2%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 30 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+A3%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 31 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+A4%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 32 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+A5%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 33 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+A0%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 34 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\small
+\ipesetcolor{0}{0}{0}%
+\rotatebox{270}{analog in}%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 35 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\small
+\ipesetcolor{0}{0}{0}%
+\rotatebox{270}{power}%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 36 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\small
+\ipesetcolor{0}{0}{0}%
+\rotatebox{90}{digital $\cdot$ PWM $\sim$}%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 37 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\footnotesize
+\ipesetcolor{0}{0}{0}%
+VIN%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 38 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\small
+\ipesetcolor{0}{0}{0}%
+\rotatebox{270}{Vin}%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 39 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\small
+\ipesetcolor{0}{0}{0}%
+\rotatebox{270}{3Vo}%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 40 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\small
+\ipesetcolor{0}{0}{0}%
+\rotatebox{270}{GND}%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 41 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\small
+\ipesetcolor{0}{0}{0}%
+\rotatebox{270}{SCL}%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 42 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\small
+\ipesetcolor{0}{0}{0}%
+\rotatebox{270}{SDA}%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 43 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\small
+\ipesetcolor{0}{0}{0}%
+\rotatebox{270}{SDO}%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 44 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\small
+\ipesetcolor{0}{0}{0}%
+\rotatebox{270}{CS}%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 45 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\small
+\ipesetcolor{0}{0}{0}%
+\rotatebox{270}{INT}%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 46 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\large
+\ipesetcolor{0}{0}{0}%
+LIS3DH%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 47 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\normalsize
+\ipesetcolor{0}{0}{0}%
+All resistor values should be $\geq 330\Omega$%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 48 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\normalsize
+\ipesetcolor{0}{0}{0}%
+\rotatebox{90}{$x$ axis}%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 49 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\normalsize
+\ipesetcolor{0}{0}{0}%
+\rotatebox{90}{$y$ axis}%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 50 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\normalsize
+\ipesetcolor{0}{0}{0}%
+\rotatebox{90}{$z$ axis}%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 51 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\normalsize
+\ipesetcolor{0}{0}{0}%
+$+z$%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 52 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\normalsize
+\ipesetcolor{0}{0}{0}%
+$-z$%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 53 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\normalsize
+\ipesetcolor{0}{0}{0}%
+$+y$%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 54 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\normalsize
+\ipesetcolor{0}{0}{0}%
+$-y$%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 55 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\normalsize
+\ipesetcolor{0}{0}{0}%
+$+x$%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 56 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\normalsize
+\ipesetcolor{0}{0}{0}%
+$-x$%
+\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 57 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\begin{minipage}{53.468bp}\small
+\ipesetcolor{0}{0}{0}%
+on when A0 is 1, and A1 is 0
+\end{minipage}\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 58 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\setbox0=\hbox{\begin{minipage}{53.468bp}\small
+\ipesetcolor{0}{0}{0}%
+on when A1 is 1, and A0 is 0
+\end{minipage}\iperesetcolor}
+\count0=\dp0\divide\count0 by \bigpoint
+\pdfxform attr{/IpeId 59 /IpeStretch 1 /IpeDepth \the\count0}0\put(0,0){\pdfrefxform\pdflastxform}
+\end{picture}
+\end{document}
