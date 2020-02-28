@@ -1,8 +1,44 @@
-Please edit this file to include your responses to the reflection questions
-below.
-
 ==== QUESTION 1 ===============================================================
+
+It is likely that the baudrate, stop bits, and/or parity bits are mismatched
+between the program and the serial client. In addition, if the baud rate is
+matched, but is higher than the hardware UART implementation can handle, this
+could also cause junk output, as the hardware cannot actually acheive the
+specified baud rate. However, in the context of the assignment, this second
+possibility is unlikely, since the provided configuration and code set the baud
+rate to 57600.
 
 ==== QUESTION 2 ===============================================================
 
+We did serial input/output on the main loop, and did LED blinking on a timer
+interrupt. We decided on this approach, as the blinking, when enabled, is
+non-interactive, and so can be implemented with a fairly simple interrupt
+handler. In addition, the action in the interrupt handler does not have effects
+on the code flow outside of the handler. This allows all action at a distance
+to occur within the main loop, which is easier to analyse from the perspective
+of someone most familiar with non-concurrent non-volatile imperative
+programming. One additional advantage is that LED blink enabling can be set
+with global interrupt enable and disable, as we are using no other interrupts
+(the timer interrupt enable could alternatively be used if we needed other
+interrupts).
+
 ==== QUESTION 3 ===============================================================
+
+We have the following code in the timer 0 overflow handler:
+
+```c
+++overflows;
+if (overflows == INTERVAL / 2) {
+    setBitByIndex(&PORTC, PORTC0, 0);
+} else if (overflows >= INTERVAL) {
+    setBitByIndex(&PORTC, PORTC0, 1);
+    overflows = 0;
+}
+```
+
+In our code currently, `INTERVAL` is a constant define, but it could be made
+into a variable, and with potential modification to the clock divider and the
+datatype of `overflows` to provide the desired fidelity and prevent integer
+rollovers within the acceptable range for `X`, along with some conversion from
+milliseconds to the unit (based on clock cycles) for `INTERVAl`, the cycle
+period for the LED could be finely controlled.
