@@ -4,6 +4,9 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <util/delay.h>
+#include "lis3dh.h"
+
+/////// BIT MANIPULATION //////////////////////////////////////////////////////
 
 void setBitByIndex(volatile uint8_t* reg, uint8_t index, uint8_t value) {
     if (value) {
@@ -23,6 +26,8 @@ void setMultiBitByIndex(volatile uint8_t* reg, uint8_t pairs, ...) {
     }
     va_end(args);
 }
+
+/////// UART I/O //////////////////////////////////////////////////////////////
 
 int uart_putchar(char c, FILE *stream) {
     loop_until_bit_is_set(UCSR0A, UDRE0);
@@ -54,6 +59,13 @@ void uart_init(void) {
     printf("\n\nUART initialized (%i 8N1)\n", UART_BAUDRATE);
 }
 
+/////// SPI I/O ///////////////////////////////////////////////////////////////
+
+#define SS   PORTB2
+#define MOSI PORTB3
+#define MISO PORTB4
+#define SCLK PORTB5
+
 void spi_init(void) {
     setMultiBitByIndex(&SPCR, 8,
             SPIE, 0, // no SPI interrupt
@@ -63,88 +75,91 @@ void spi_init(void) {
             CPOL, 0, // leading rising, trailing falling
             CPHA, 0, // leading sample, trailing setup
             SPR1, 1, SPR0, 1); // 128 clock divider
+    setMultiBitByIndex(&DDRB, 4, DDB2, 1, DDB3, 1, DDB4, 0, DDB5, 1);
+    setBitByIndex(&PORTB, SS, 1);
 }
 
-#define SS   PORTB2
-#define MOSI PORTB3
-#define MISO PORTB4
-#define SCLK PORTB5
+volatile uint8_t spi_batch_count = 0;
 
-void lis3dh_init(void) {
+// NOTE: These have no overflow/underflow protections. Use at own risk.
+void push_spi_batch() {
+    cli();
+    ++spi_batch_count;
+    setBitByIndex(&PORTB, SS, 0);
 }
-
-volatile uint8_t overflows = 0;
-
-#define DIVIDER (256)
-#define INTERVAL ((uint8_t)((F_CPU / DIVIDER) / (1 << 8)))
-
-ISR(TIMER0_OVF_vect) {
-    ++overflows;
-    if (overflows == INTERVAL / 2) {
-        setBitByIndex(&PORTC, PORTC0, 0);
-    } else if (overflows >= INTERVAL) {
-        setBitByIndex(&PORTC, PORTC0, 1);
-        overflows = 0;
+void pop_spi_batch() {
+    --spi_batch_count;
+    if (spi_batch_count == 0) {
+        setBitByIndex(&PORTB, SS, 1);
+        sei();
     }
 }
 
-#define MAX_COMMAND_LENGTH (64)
-
-char command[MAX_COMMAND_LENGTH];
-uint8_t commandLength = 0;
-
-uint8_t matchesCommand(char* compare) {
-    for (uint8_t i = 0; i < commandLength; ++i) {
-        if (compare[i] == '\0' || compare[i] != command[i]) {
-            return 0;
-        }
-    }
-    return (commandLength == MAX_COMMAND_LENGTH
-            || compare[commandLength] == '\0');
+uint8_t spi_transfer(uint8_t value) {
+    push_spi_batch();
+    SPDR = value;
+    loop_until_bit_is_set(SPSR, 7);
+    uint8_t ret = SPDR;
+    pop_spi_batch();
+    return ret;
 }
 
-void resetPrompt() {
-    commandLength = 0;
-    printf("\nready> ");
-    fflush(stdout);
+/////// LIS3DH I/O ////////////////////////////////////////////////////////////
+
+uint8_t lis3dh_read(uint8_t reg) {
+    push_spi_batch();
+    spi_transfer(reg | 0x80);
+    uint8_t ret = spi_transfer(0xff);
+    pop_spi_batch();
+    return ret;
 }
+
+void lis3dh_write(uint8_t reg, uint8_t value) {
+    push_spi_batch();
+    spi_transfer(reg & ~0x80);
+    spi_transfer(value);
+    pop_spi_batch();
+}
+
+void lis3dh_setup(void) {
+    lis3dh_write(CTRL_REG1, 0x17); // 1Hz, normal mode, X/Y/Z all enabled
+    lis3dh_write(CTRL_REG5, 0x08); // No FIFO, latch interrupts
+    lis3dh_write(FIFO_CTRL_REG, 0x00); // No FIFO, so Bypass
+    lis3dh_write(CTRL_REG3, 0x10); // Enable DRDY1 interrupt on INT1
+    lis3dh_write(CTRL_REG6, 0x02); // Active low INT1
+    setMultiBitByIndex(&EICRA, 2, ISC01, 0, ISC00, 0);
+    setBitByIndex(&EIMSK, INT0, 1);
+}
+
+/////// LIS3DH DATA READY INTERRUPT HANDLER ///////////////////////////////////
+
+volatile uint16_t x = 0;
+volatile uint16_t y = 0;
+volatile uint16_t z = 0;
+
+ISR(INT0_vect) {
+    uint8_t xl = lis3dh_read(OUT_X_L);
+    uint8_t xh = lis3dh_read(OUT_X_H);
+    uint8_t yl = lis3dh_read(OUT_Y_L);
+    uint8_t yh = lis3dh_read(OUT_Y_H);
+    uint8_t zl = lis3dh_read(OUT_Z_L);
+    uint8_t zh = lis3dh_read(OUT_Z_H);
+    x = (xh << 8) | xl;
+    y = (yh << 8) | yl;
+    z = (zh << 8) | zl;
+    printf("XYZ: (0x%04x, 0x%04x, 0x%04x)\n", x, y, z);
+    printf("INT1_SOURCE: 0x%02x\n", lis3dh_read(INT1_SOURCE));
+}
+
+/////// MAIN //////////////////////////////////////////////////////////////////
 
 int main(void) {
+    cli();
     uart_init();
+    spi_init();
+    lis3dh_setup();
     setBitByIndex(&DDRC, DDC0, 1);
     setBitByIndex(&PORTC, PORTC0, 0);
-    cli();
-    setMultiBitByIndex(&TCCR0B, 3, CS02, 1, CS01, 0, CS00, 0);
-    setBitByIndex(&TIMSK0, TOIE0, 1);
-    resetPrompt();
-    int c;
-    while (1) {
-        c = uart_getchar(stdin);
-        if (c == '\r' || c == '\n') {
-            if (commandLength == 0) {
-                // pass
-            } else if (matchesCommand("on")) {
-                overflows = 0;
-                TCNT0 = 0;
-                setBitByIndex(&PORTC, PORTC0, 1);
-                sei();
-            } else if (matchesCommand("off")) {
-                cli();
-                setBitByIndex(&PORTC, PORTC0, 0);
-            } else {
-                printf("\nUnknown command. Valid commands: on, off");
-            }
-            resetPrompt();
-        } else if (c == '\b' || c == '\x7f') {
-            if (commandLength != 0) {
-                --commandLength;
-            }
-        } else if (commandLength == MAX_COMMAND_LENGTH) {
-            printf("\nMaximum command length %d exceeded", MAX_COMMAND_LENGTH);
-            resetPrompt();
-        } else {
-            command[commandLength] = c;
-            ++commandLength;
-        }
-    }
+    sei();
+    while (1) { }
 }
