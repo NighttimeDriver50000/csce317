@@ -1,8 +1,21 @@
-Please edit this file to include your responses to the reflection questions
-below.
-
 ==== QUESTION 1 ===============================================================
+
+The `WHO_AM_I` register can be used to verify that the connection to the LIS3DH
+is working, and it can also be used in heterogeneous multi-slave environments
+for heuristics to verify that the correct slave has been selected.
+
+In addition, if the LIS3DH is embedded in a device, the `WHO_AM_I` register
+could be used to identify that the device is using the LIS3DH specifically
+without opening the device.
 
 ==== QUESTION 2 ===============================================================
 
+The value would be 0x67. The 4-bit lookup saves on throughput and memory, and
+makes hardware implementation simple, while still allowing for a decent range
+of frequencies common to different applications.
+
 ==== QUESTION 3 ===============================================================
+
+There is no particular reason that the interrupt enabled by bit `SPIE` of
+register `SPCR` could not be used for handling transfers, but it is more
+convenient for our application to do SPI transfers synchronously.
