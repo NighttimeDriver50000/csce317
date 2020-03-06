@@ -119,15 +119,17 @@ void lis3dh_write(uint8_t reg, uint8_t value) {
     pop_spi_batch();
 }
 
-int16_t bytes2short(uint8_t lo, uint8_t hi) {
+typedef int16_t xyz_t;
+
+xyz_t bytes2short(uint8_t lo, uint8_t hi) {
     uint16_t hi16 = hi;
     uint16_t raw = (hi16 << 8) | lo;
-    return *(int16_t*)(&raw);
+    return *(xyz_t*)(&raw);
 }
 
-volatile int16_t x = 0;
-volatile int16_t y = 0;
-volatile int16_t z = 0;
+volatile xyz_t x = 0;
+volatile xyz_t y = 0;
+volatile xyz_t z = 0;
 
 void lis3dh_update_xyz() {
     uint8_t xl = lis3dh_read(OUT_X_L);
