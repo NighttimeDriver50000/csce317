@@ -177,6 +177,10 @@ typedef uint16_t interval_t;
 
 volatile interval_t overflows = 0;
 
+/*
+#define DIVIDER (256)
+#define INTERVAL ((uint8_t)((F_CPU / DIVIDER) / (1 << 8)))
+*/
 #define DIVIDER (1)
 #define INTERVAL ((uint16_t)((F_CPU / DIVIDER)))
 #define LED_INTERVAL (64)
@@ -217,14 +221,20 @@ ISR(TIMER0_OVF_vect) {
         uint8_t on = (overflows % LED_INTERVAL >= interval_for_led(i));
         setBitByIndex(&PORTC, i, on);
     }
+    if (overflows >= INTERVAL) {
+#if defined(POLLING)
+        lis3dh_update_xyz();
+#endif
+        printf("XYZ: (%+d, %+d, %+d)\n", x, y, z);
+#if !defined(POLLING)
+        //printf("INT1_SOURCE: 0x%02x\n", int1_src);
+        //printf("STATUS_REG2: 0x%02x\n", status_reg);
+#endif
+        overflows = 0;
+    }
 }
 
 /////// MAIN //////////////////////////////////////////////////////////////////
-
-void resetPrompt() {
-    printf("\nready> ");
-    fflush(stdout);
-}
 
 int main(void) {
     cli();
@@ -234,18 +244,7 @@ int main(void) {
     }
     setMultiBitByIndex(&TCCR0B, 3, CS02, 0, CS01, 0, CS00, 1);
     setBitByIndex(&TIMSK0, TOIE0, 1);
-    //spi_init();
-    //lis3dh_setup();
-    while (1) {
-        int px, py, pz;
-        resetPrompt();
-        scanf("%d %d %d\n", &px, &py, &pz);
-        if (px < -100 || px > 100 || py < -100 || py > 100 || pz < -100 || pz > 100) {
-            printf("\nValues must be in the range [-100, 100].");
-        } else {
-            x = (INT16_MAX * (int32_t)px) / 100;
-            y = (INT16_MAX * (int32_t)py) / 100;
-            z = (INT16_MAX * (int32_t)pz) / 100;
-        }
-    }
+    spi_init();
+    lis3dh_setup();
+    while (1) { }
 }
